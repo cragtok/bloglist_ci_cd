@@ -7,7 +7,7 @@
         "start-dev-frontend": "cd ./frontend && npm start",
         "start-prod": "cd ./backend && npm start",
         "build": "cd ./backend && rm -rf ./build && cd ../frontend && npm run build && cp -r ./build ../backend",
-        "lint": "cd ./backend && npm run eslint && cd ../frontend && npm run eslint",
+        "eslint": "cd ./backend && npm run eslint && cd ../frontend && npm run eslint",
         "install": "cd ./backend && npm install && cd ../frontend && npm install"
     },
     "repository": {
