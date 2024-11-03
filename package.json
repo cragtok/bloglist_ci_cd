@@ -1,7 +1,7 @@
 {
-    "name": "bloglist-fullstack",
+    "name": "bloglist-ci-cd",
     "version": "1.0.0",
-    "description": "Full Stack MERN Bloglist application",
+    "description": "App used to implement pipeline for Full Stack Open's CI/CD module",
     "scripts": {
         "start-dev-backend": "cd ./backend && npm run dev",
         "start-dev-frontend": "cd ./frontend && npm start",
@@ -11,14 +11,5 @@
         "eslint": "cd ./backend && npm run eslint && cd ../frontend && npm run eslint",
         "test": "cd ./backend/ && npm run test"
     },
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/cragtok/bloglist.git"
-    },
-    "author": "",
-    "license": "ISC",
-    "bugs": {
-        "url": "https://github.com/cragtok/bloglist/issues"
-    },
-    "homepage": "https://github.com/cragtok/bloglist#readme"
+    "author": "cragtok",
 }
