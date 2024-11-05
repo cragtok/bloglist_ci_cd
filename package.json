@@ -9,7 +9,8 @@
         "build": "cd ./backend && rm -rf ./build && cd ../frontend && npm run build && cp -r ./build ../backend",
         "install": "cd ./backend && npm install && cd ../frontend && npm install",
         "eslint": "cd ./backend && npm run eslint && cd ../frontend && npm run eslint",
-        "test": "cd ./backend/ && npm run test"
+        "test": "cd ./backend/ && npm run test",
+        "test-e2e": "cd ./backend/ && npm run test-e2e"
     },
     "author": "cragtok"
 }
