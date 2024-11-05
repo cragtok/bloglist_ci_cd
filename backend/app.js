@@ -14,11 +14,14 @@ app.use(cors());
 app.use(middleware.requestLogger);
 if (process.env.NODE_ENV === "production") {
     app.use(express.static("build"));
-    app.get("/*", function (req, res, next) {
+    app.get("/health", (req, res) => {
+        res.send("ok");
+    });
+    app.get("/*", function(req, res, next) {
         if (req.url.includes("/api")) {
             return next();
         }
-        res.sendFile(path.join(__dirname, "build/index.html"), function (err) {
+        res.sendFile(path.join(__dirname, "build/index.html"), function(err) {
             if (err) {
                 res.status(500).send(err);
             }
