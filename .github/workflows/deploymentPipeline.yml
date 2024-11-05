@@ -21,3 +21,12 @@ jobs:
         run: npm run eslint
       - name: test
         run: npm run test
+      - name: deploy
+        env:
+          deploy_url: ${{ secrets.RENDER_DEPLOY_HOOK_URL }}
+          IS_MAIN: ${{ github.ref == 'refs/heads/main' }}
+          IS_PUSH: ${{ github.event_name == 'push' }}
+          CONTAINS_SKIP: ${{ contains(join(toJson(github.event.commits.*.message)), '#skip') }}
+        if: ${{ success() && env.CONTAINS_SKIP == 'false' && env.IS_MAIN && env.IS_PUSH }}
+        run: |
+          curl "$deploy_url"
