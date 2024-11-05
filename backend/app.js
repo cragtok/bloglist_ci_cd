@@ -15,6 +15,8 @@ app.use(middleware.requestLogger);
 if (process.env.NODE_ENV === "production") {
     app.use(express.static("build"));
     app.get("/health", (req, res) => {
+        // eslint-disable-next-line no-constant-condition
+        if (true) throw "error...  ";
         res.send("ok");
     });
     app.get("/*", function(req, res, next) {
