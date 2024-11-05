@@ -11,5 +11,5 @@
         "eslint": "cd ./backend && npm run eslint && cd ../frontend && npm run eslint",
         "test": "cd ./backend/ && npm run test"
     },
-    "author": "cragtok",
+    "author": "cragtok"
 }
