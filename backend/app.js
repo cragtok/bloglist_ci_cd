@@ -29,6 +29,10 @@ if (process.env.NODE_ENV === "production") {
     });
 }
 
+app.get("/health", (req, res) => {
+    res.send("ok");
+});
+
 app.use("/api/login", loginRouter);
 app.use(middleware.userExtractor);
 app.use("/api/blogs", blogsRouter);
