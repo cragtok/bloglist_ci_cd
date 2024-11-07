@@ -47,9 +47,25 @@ jobs:
         if: ${{ success() && env.NOT_CONTAINS_SKIP && env.IS_MAIN && env.IS_NOT_PR }}
         run: |
           curl "$deploy_url"
+      - name: Success notification
+        uses: stegzilla/discord-notify@v4
+        with:
+          title: A new version of Bloglist has been deployed!
+          message: "**User:** ${{ github.actor }}\n**Link:** https://tinyurl.com/yc5zfzdn\n**Commit**: https://github.com/${{ github.actor }}/full-stack-open-pokedex/commit/${{ github.event.commit.url }}"
+          colour: "#a5db5e"
+          webhook_url: ${{ secrets.DISCORD_WEBHOOK }}
+        if: ${{ success() }}
+      - name: Error notification
+        uses: stegzilla/discord-notify@v4
+        with:
+          title: New Bloglist build failed!
+          message: "**User:** ${{ github.actor }}\n**Commit**: https://github.com/${{ github.actor }}/full-stack-open-pokedex/commit/${{ github.event.commit.url }}"
+          colour: "#d93d3f"
+          webhook_url: ${{ secrets.DISCORD_WEBHOOK }}
+        if: ${{ failure() }}
   tag_release:
     needs: [deployment_pipeline]
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - name: Bump Version and Push Tag
