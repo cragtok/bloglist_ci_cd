@@ -42,7 +42,7 @@ jobs:
         env:
           deploy_url: ${{ secrets.RENDER_DEPLOY_HOOK_URL }}
           IS_MAIN: ${{ github.ref == 'refs/heads/main' }}
-          IS_NOT_PR: ${{ github.event_name != 'pull_request'  }}
+          IS_NOT_PR: ${{ github.event_name != 'pull_request' && github.event.pull_request.merged == false }}
           NOT_CONTAINS_SKIP: ${{ contains(join(toJson(github.event.commits.*.message)), '#skip') == 'false' }}
         if: ${{ success() && env.NOT_CONTAINS_SKIP && env.IS_MAIN && env.IS_NOT_PR }}
         run: |
