@@ -42,8 +42,22 @@ jobs:
         env:
           deploy_url: ${{ secrets.RENDER_DEPLOY_HOOK_URL }}
           IS_MAIN: ${{ github.ref == 'refs/heads/main' }}
-          IS_NOT_PR: ${{ github.event_name != 'pull_request' && github.event.pull_request.merged == false }}
+          IS_NOT_PR: ${{ github.event_name != 'pull_request' && github.event.pull_request.merged == 'false' }}
           NOT_CONTAINS_SKIP: ${{ contains(join(toJson(github.event.commits.*.message)), '#skip') == 'false' }}
         if: ${{ success() && env.NOT_CONTAINS_SKIP && env.IS_MAIN && env.IS_NOT_PR }}
         run: |
           curl "$deploy_url"
+  tag_release:
+    needs: [deployment_pipeline]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Bump Version and Push Tag
+        uses: anothrNick/github-tag-action@1.71.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          DEFAULT_BUMP: 'patch'
+          IS_MAIN: ${{ github.ref == 'refs/heads/main' }}
+          IS_NOT_PR: ${{ github.event_name != 'pull_request' && github.event.pull_request.merged == 'false' }}
+          NOT_CONTAINS_SKIP: ${{ contains(join(toJson(github.event.commits.*.message)), '#skip') == 'false' }}
+        if: ${{ env.NOT_CONTAINS_SKIP && env.IS_MAIN && env.IS_NOT_PR }}
