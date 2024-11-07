@@ -49,7 +49,7 @@ jobs:
           curl "$deploy_url"
   tag_release:
     needs: [deployment_pipeline]
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v4
       - name: Bump Version and Push Tag
