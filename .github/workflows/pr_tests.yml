@@ -1,0 +1,36 @@
+name: "PR Tests"
+
+on:
+    pull_request:
+      branches: [main]
+      types: [opened]
+
+jobs:
+  pr_checks:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: install dependencies
+        run: npm install
+      - name: build
+        run: npm run build
+      - name: lint
+        run: npm run eslint
+      - name: test
+        run: npm run test
+      - name: e2e-test - install browsers
+        run: cd ./backend && npx playwright install --with-deps
+      - name: e2e-test - run playwright tests
+        env:
+          MONGODB_URI: ${{ secrets.MONGODB_URI }}
+          PORT: 3003
+        run: npm run test-e2e
+      - uses: actions/upload-artifact@v4
+        if: ${{ !cancelled() }}
+        with:
+          name: playwright-report
+          path: ./backend/playwright-report/
+          retention-days: 30
