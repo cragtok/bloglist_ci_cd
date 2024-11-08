@@ -42,3 +42,9 @@ npm run start-prod
 ```
 
 ## Actions
+
+Actions can be found in the `.github/workflows` directory of the repo:
+- `test.yml` - Outputs "hello world".
+- `deploymentPipeline.yml` - Full deployment pipeline for app (build, lint, test, deploy).
+- `pr_tests.yml` - Tests to be run upon opening a PR.
+- `scheduleHealthCheck.yml` - Periodic health check of deployed app.
